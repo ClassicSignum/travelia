@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin!</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/Chart.min.css">
+</head>
+<body>
+     <!-- header part starts -->
+
+  <header class="header-part">
+    <div class="items container-fluid bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="index.html">
+          <img class="wow rotateIn" src="/images/travelia/logo.png" data-wow-duration="3s" data-wow-iteration="40"
+            height="50" width="60" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          
+          <form class="form-inline ml-auto my-2 my-lg-0">
+            <a href="" class="bell mr-4">
+                <i class="fas fa-bell"></i>
+            </a>
+            <a href="" role="button" class="btn btn-outline-success mr-4">Log out</a>
+        </form>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- header part starts -->
+
+   <!-- admin dash part starts -->
+   <section class="admin-dash-part">
+
+    <div class=" container-fluid">
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="items text-center">
+
+                    <img src="/images/admin/admin.png" alt="">
+                    <h4>Admin</h4>
+
+                    <div class="row btns">
+                        <div class="col-md-3">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <a href="">Home</a>
+                        </div>
+                    </div>
+
+                    <div class="row btns">
+
+                        <div class="col-md-3">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <a href="">My Info</a>
+                        </div>
+                    </div>
+
+                    <div class="row btns">
+
+                        <div class="col-md-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <a href="">Customer Info</a>
+                        </div>
+                    </div>
+
+                    <div class="row btns">
+
+                        <div class="col-md-3">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div class="col-md-9 text-center travel-font">
+                            <a href="">Travel Guider Info</a>
+                        </div>
+                    </div>
+                    <div class="row btns">
+
+                        <div class="col-md-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <a href="">Hotel Emp Info</a>
+                        </div>
+                    </div>
+                    <div class="row btns">
+
+                            <div class="col-md-3">
+                            <i class="far fa-list-alt"></i>
+                            </div>
+                            <div class="col-md-9 text-center">
+                                <a href="">Hotels</a>
+                            </div>
+                        </div>
+
+
+
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="items2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="users">
+                                <canvas id="myUser"></canvas>
+                                <p>Graph of users</p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <canvas id="myProduct"></canvas>
+                            <p>Chart of places</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- admin dash part ends -->
+
+
+
+
+
+
+
+
+
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/Chart.min.js"></script>
+
+    <!-- chart js starts -->
+    <script>
+      var ctx = document.getElementById('myUser').getContext('2d');
+      var myUser = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['Customers', 'Hotel Emp', 'Travel Guider','Care'],
+              datasets: [{
+                  label: 'User Catagory',
+                  data: [7, 3, 3,10],
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(155, 155, 155, 0.2)'
+
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(155, 155, 155, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              },
+              animation: {
+
+                  easing: 'easeOutBounce',
+
+              }
+          
+          }
+      });
+
+
+      ///////////
+      var myPie = document.getElementById('myProduct').getContext('2d');
+      var myProduct = new Chart(myPie, {
+          type: 'pie',
+          data: {
+              labels: ['Dhaka', 'Rajshahi', 'Khulna', 'Chittagong','Barishal','Sylhet'],
+              datasets: [{
+                  label: 'Places chart',
+                  data: [2, 9, 3, 5,4,6],
+                  backgroundColor: [
+                      'rgba(180, 24, 180, 0.2)',
+                      'rgba(0, 0, 255, 0.2)',
+                      'rgba(0, 128, 0, 0.2)',
+                      'rgba(255, 255, 0, 0.2)',
+                      'rgba(255, 0, 0, 0.2)',
+                      'rgba(0, 0, 0, 0.2)',
+
+                  ],
+                  borderColor: [
+                      'rgba(180, 24, 180, 1)',
+                      'rgba(0, 0, 255, 1)',
+                      'rgba(0, 128, 0, 1)',
+                      'rgba(255, 255, 0, 1)',
+                      'rgba(255, 0, 0, 1)',
+                      'rgba(0, 0, 0, 1)',
+                      
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              animation: {
+
+                  easing: 'easeOutBounce',
+
+              }
+              
+          }
+      });
+  </script>
+    <!-- chart js ends -->
+
+</body>
+</html>

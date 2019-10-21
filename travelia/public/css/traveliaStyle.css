@@ -74,6 +74,22 @@ body {
   height: 700px;
 }
 
+.picture-part .carousel-item h5 {
+  font-family: 'Courgette', cursive;
+  color: #caccce;
+  font-size: 56px;
+  text-shadow: 0px 0px 25px #000;
+  background: rgba(0, 0, 0, 0.473);
+  display: inline;
+  border-radius: 40%;
+}
+
+.picture-part .carousel-item p {
+  background: rgba(0, 0, 0, 0.575);
+  display: inline;
+  border-radius: 40%;
+}
+
 /*picture part ends*/
 /*holiday part starts*/
 .holiday-part .items {
