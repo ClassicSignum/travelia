@@ -134,6 +134,166 @@ router.get('/adminCustCare', function (request, response) { //show customerC acc
         response.render('admin/adminCustCare', { users: result });
     });
 });
+router.get('/adminTraveller', function (request, response) { //show traveller account page
+    adminModel.getAll("Traveller", function (result) {
+        response.render('admin/adminTraveller', { users: result });
+    });
+});
+router.get('/adminHotelEmp', function (request, response) { //show customerC account page
+    adminModel.getAll("Hotel Emp", function (result) {
+        response.render('admin/adminCustCare', { users: result });
+    });
+});
+router.get('/adminTravelGuide', function (request, response) { //show traveller account page
+    adminModel.getAll("Travel guider", function (result) {
+        response.render('admin/adminTraveller', { users: result });
+    });
+});
+
+
+
+router.post('/adminCustCare',function(request,response){
+    if(request.body.submit=="permitted"){
+      
+        adminModel.permitOrRestrict("restricted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else if(request.body.submit=="restricted"){
+    
+        adminModel.permitOrRestrict("permitted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else{
+        adminModel.deleteAccount(request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
+
+
+router.post('/adminTraveller',function(request,response){
+    if(request.body.submit=="permitted"){
+      
+        adminModel.permitOrRestrict("restricted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else if(request.body.submit=="restricted"){
+    
+        adminModel.permitOrRestrict("permitted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else{
+        adminModel.deleteAccount(request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
+
+
+router.post('/adminHotelEmp',function(request,response){
+    if(request.body.submit=="permitted"){
+      
+        adminModel.permitOrRestrict("restricted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else if(request.body.submit=="restricted"){
+    
+        adminModel.permitOrRestrict("permitted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else{
+        adminModel.deleteAccount(request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
+
+
+router.post('/adminTravelGuide',function(request,response){
+    if(request.body.submit=="permitted"){
+      
+        adminModel.permitOrRestrict("restricted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else if(request.body.submit=="restricted"){
+    
+        adminModel.permitOrRestrict("permitted",request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else{
+        adminModel.deleteAccount(request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
 
 
 module.exports = router;

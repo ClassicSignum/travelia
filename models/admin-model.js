@@ -2,11 +2,31 @@ var db = require('../models/db');
 
 module.exports = {
 
+
+    deleteAccount:function(email,callback){ //inner join used to delete from multiple table...
+        var sql="delete user,userinfo from user inner join userinfo on userinfo.usermail=user.usermail where user.usermail='"+email+"'";
+
+        db.execute(sql,function(status){
+            callback(status);
+        });
+    },
+
+
+    permitOrRestrict:function(action,email,callback){
+
+        var sql="update userinfo set status='"+action+"' where usermail='"+email+"'";
+
+        db.execute(sql, function (status) {
+            callback(status);
+        });
+
+    },
+
     getAll: function (usertype,callback) {
         var sql = "select * from userinfo where usertype='" + usertype + "'";
 
         db.getResults(sql, function (results) {
-                console.log(results);
+               
             if (results.length > 0) {
                 callback(results);
             } else {
@@ -17,11 +37,11 @@ module.exports = {
 
     getMyInfo: function (loginemail, callback) {
 
-        console.log(loginemail);
+        // console.log(loginemail);
         var sql = "select * from user where usermail='" + loginemail + "'";
         db.getResults(sql, function (result) {
             if (result.length > 0) {
-                console.log(result);
+                // console.log(result);
                 callback(result);
             } else {
                 callback([]);
