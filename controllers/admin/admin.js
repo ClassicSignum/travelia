@@ -151,6 +151,13 @@ router.get('/adminTravelGuide', function (request, response) { //show traveller 
 });
 
 
+router.get('/adminHotelinfo', function (request, response) { //show traveller account page
+    adminModel.getAllHotel(function (result) {
+        response.render('admin/adminHotelinfo', { hotel: result });
+    });
+});
+
+
 
 router.post('/adminCustCare',function(request,response){
     if(request.body.submit=="permitted"){
@@ -285,6 +292,41 @@ router.post('/adminTravelGuide',function(request,response){
     }
     else{
         adminModel.deleteAccount(request.body.email,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
+
+router.post('/adminHotelinfo',function(request,response){
+    if(request.body.submit=="permitted"){
+      
+        adminModel.permitOrRestrictHotel("restricted",request.body.hotelname,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else if(request.body.submit=="restricted"){
+    
+        adminModel.permitOrRestrictHotel("permitted",request.body.hotelname,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+    else{
+        adminModel.deleteHotel(request.body.hotelname,function(status){
             if(status){
                 response.redirect('/admin');
             }

@@ -2,6 +2,27 @@ var db = require('../models/db');
 
 module.exports = {
 
+    getAllHotel: function (callback) {
+        var sql = "select * from hotelinfo";
+
+        db.getResults(sql, function (results) {
+               
+            if (results.length > 0) {
+                callback(results);
+            } else {
+                callback([]);
+            }
+        });
+    },
+
+    deleteHotel:function(name,callback){ //inner join used to delete from multiple table...
+        var sql="delete from hotelinfo  where hotelname='"+name+"'";
+
+        db.execute(sql,function(status){
+            callback(status);
+        });
+    },
+
 
     deleteAccount:function(email,callback){ //inner join used to delete from multiple table...
         var sql="delete user,userinfo from user inner join userinfo on userinfo.usermail=user.usermail where user.usermail='"+email+"'";
@@ -9,6 +30,16 @@ module.exports = {
         db.execute(sql,function(status){
             callback(status);
         });
+    },
+
+    permitOrRestrictHotel:function(action,name,callback){
+
+        var sql="update hotelinfo set status='"+action+"' where hotelname='"+name+"'";
+
+        db.execute(sql, function (status) {
+            callback(status);
+        });
+
     },
 
 
@@ -34,6 +65,8 @@ module.exports = {
             }
         });
     },
+
+
 
     getMyInfo: function (loginemail, callback) {
 
