@@ -15,6 +15,27 @@ module.exports = {
         });
     },
 
+    getAllTravelPlace: function (callback) {
+        var sql = "select * from travelplace";
+
+        db.getResults(sql, function (results) {
+               
+            if (results.length > 0) {
+                callback(results);
+            } else {
+                callback([]);
+            }
+        });
+    },
+
+    deleteTravelPlace:function(name,callback){ //inner join used to delete from multiple table...
+        var sql="delete from travelplace  where travelplace='"+name+"'";
+
+        db.execute(sql,function(status){
+            callback(status);
+        });
+    },
+
     deleteHotel:function(name,callback){ //inner join used to delete from multiple table...
         var sql="delete from hotelinfo  where hotelname='"+name+"'";
 

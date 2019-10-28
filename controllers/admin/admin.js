@@ -157,6 +157,12 @@ router.get('/adminHotelinfo', function (request, response) { //show traveller ac
     });
 });
 
+router.get('/adminTravelPlace', function (request, response) { //show traveller account page
+    adminModel.getAllTravelPlace(function (result) {
+        response.render('admin/adminTravelPlace', { travelplace: result });
+    });
+});
+
 
 
 router.post('/adminCustCare',function(request,response){
@@ -327,6 +333,26 @@ router.post('/adminHotelinfo',function(request,response){
     }
     else{
         adminModel.deleteHotel(request.body.hotelname,function(status){
+            if(status){
+                response.redirect('/admin');
+            }
+            else{
+                response.send("problem ");
+            }
+        });
+    }
+});
+
+
+router.post('/adminTravelPlace',function(request,response){
+    if(request.body.submit=="Pictures"){
+        
+        
+        response.render('admin/adminTravelPlacePic', { travelplace: request.body.travelplace });
+    }
+    
+    else{
+        adminModel.deleteTravelPlace(request.body.travelplace,function(status){
             if(status){
                 response.redirect('/admin');
             }

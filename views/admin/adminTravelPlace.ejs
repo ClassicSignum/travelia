@@ -92,7 +92,7 @@
                                 <i class="fas fa-user-friends"></i>
                             </div>
                             <div class="col-md-9 text-center travel-font">
-                                <a href="/admin/adminTraveller">Travel Guider Info</a>
+                                <a href="/admin/adminTravelGuide">Travel Guider Info</a>
                             </div>
                         </div>
                         <div class="row btns">
@@ -152,45 +152,40 @@
                                     <thead>
                                       <tr >
                                         <th scope="col">#</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Home Address</th>
-                                        <th scope="col">Phone No:</th>
-                                        <th scope="col">Password</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Travel Place</th>
+                                        <th scope="col">Place Location</th>
+                                        <th scope="col">Division</th>
+                                        <th scope="col">Travel Guider Email</th>
+                                        
+                                        <th scope="col">Pictures</th>
                                         <th scope="col">Action</th>
                                       </tr>
                                     </thead>
                                     <tbody>
                              <% 
                              var count =0;
-                             for(var i=0 ; i < users.length ; i++) { 
+                             for(var i=0 ; i < travelplace.length ; i++) { 
                                  count++;
-                                 if(users[i].status=="permitted"){
-                                    var btn="success";
-                                 }
-                                 else{
-                                    var btn = "danger";
-                                 }
+                                 
                                 %>
                                    
                            <form action="" method="post" >
-                           <input type="hidden" name="email"  value="<%= users[i].usermail %>">
+                           <input type="hidden" name="travelplace" value="<%= travelplace[i].travelplace %>">
 
                           
                         
                                <tr>
                                    <th scope="row"><%= count %></th>
-                                   <td><%= users[i].firstname %></td>
-                                   <td><%= users[i].lastname %></td>
-                                   <td><%= users[i].usermail %></td>
-                                   <td><%= users[i].address %></td>
-                                   <td><%= users[i].phoneno %></td>
-                                   <td><%= users[i].password %></td>
+                                   <td><%= travelplace[i].travelplace %></td>
+                                   <td><%= travelplace[i].location %></td>
+                                   <td><%= travelplace[i].division %></td>
+                                   <td><%= travelplace[i].travelguidermail %></td>
+                                   <td> <input type="submit" class="btn btn-success" name="submit" value="Pictures"></td>
+                                 
+                                
                                    
-                                   <td> <input type="submit" class="btn btn-<%= btn %>" name="submit" value="<%= users[i].status%>"></td>
-                                   <td> <input type="submit" class="btn btn-warning" name="submit" value="delete account"></td>
+                                   
+                                   <td> <input type="submit" class="btn btn-warning" name="submit" value="delete this"></td>
                                 </tr>
                             </form> 
                         
