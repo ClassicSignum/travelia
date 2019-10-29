@@ -25,6 +25,7 @@ module.exports = {
 		getConnection(function (connection){
 			connection.query(sql, function (error, results) {
 				callback(results);
+				console.log(error);
 			});
 			connection.end(function(err){
 				console.log('connection end...');
@@ -37,6 +38,7 @@ module.exports = {
 				
 				if(error){
 					callback(false);
+					console.log(error);
 				}else{
 					callback(true);
 				}

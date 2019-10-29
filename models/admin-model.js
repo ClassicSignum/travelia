@@ -2,19 +2,12 @@ var db = require('../models/db');
 
 module.exports = {
 
-    getAllHotel: function (callback) {
-        var sql = "select * from hotelinfo";
+    
 
-        db.getResults(sql, function (results) {
-               
-            if (results.length > 0) {
-                callback(results);
-            } else {
-                callback([]);
-            }
-        });
-    },
+    
 
+
+    // TRAVEL PLACE STARTS
     getAllTravelPlace: function (callback) {
         var sql = "select * from travelplace";
 
@@ -36,6 +29,9 @@ module.exports = {
         });
     },
 
+
+
+    // HOTEL SECTION STARTS
     deleteHotel:function(name,callback){ //inner join used to delete from multiple table...
         var sql="delete from hotelinfo  where hotelname='"+name+"'";
 
@@ -43,15 +39,21 @@ module.exports = {
             callback(status);
         });
     },
+    getAllHotel: function (callback) {
+        var sql = "select * from hotelinfo";
 
-
-    deleteAccount:function(email,callback){ //inner join used to delete from multiple table...
-        var sql="delete user,userinfo from user inner join userinfo on userinfo.usermail=user.usermail where user.usermail='"+email+"'";
-
-        db.execute(sql,function(status){
-            callback(status);
+        db.getResults(sql, function (results) {
+               
+            if (results.length > 0) {
+                callback(results);
+            } else {
+                callback([]);
+            }
         });
     },
+
+
+    
 
     permitOrRestrictHotel:function(action,name,callback){
 
@@ -63,7 +65,7 @@ module.exports = {
 
     },
 
-
+    // USERS SECTION STARTS
     permitOrRestrict:function(action,email,callback){
 
         var sql="update userinfo set status='"+action+"' where usermail='"+email+"'";
@@ -86,13 +88,43 @@ module.exports = {
             }
         });
     },
+    deleteAccount:function(email,callback){ //inner join used to delete from multiple table...
+        var sql="delete user,userinfo from user inner join userinfo on userinfo.usermail=user.usermail where user.usermail='"+email+"'";
+
+        db.execute(sql,function(status){
+            callback(status);
+        });
+    },
 
 
 
+    
+
+    
+
+    // ADMIN INFO STARTS
+    update: function (user, callback) {
+        var sql = "update userinfo set firstname='" + user.firstname + "',lastname='" + user.lastname + "', password='" + user.password + "',address='" + user.address + "',phoneno='" + user.phoneno + "' where usermail='" + user.email+"'";
+
+
+
+        db.execute(sql, function (status) {
+            callback(status);
+        });
+    },
+
+    updateNotPassword: function (user, callback) {
+        var sql = "update userinfo set firstname='" + user.firstname + "',lastname='" + user.lastname + "',address='" + user.address + "',phoneno='" + user.phoneno + "' where usermail='"+user.email+"'";
+
+
+        db.execute(sql, function (status) {
+            callback(status);
+        });
+    },
     getMyInfo: function (loginemail, callback) {
 
-        // console.log(loginemail);
-        var sql = "select * from user where usermail='" + loginemail + "'";
+        console.log(loginemail);
+        var sql = "select * from userinfo where usermail='" + loginemail + "'";
         db.getResults(sql, function (result) {
             if (result.length > 0) {
                 // console.log(result);
@@ -103,25 +135,35 @@ module.exports = {
         });
     },
 
-    updateNotPassword: function (user, callback) {
-        var sql = "update userinfo set firstname='" + user.firstname + "',lastname='" + user.lastname + "',address='" + user.address + "',phoneno='" + user.phoneno + "' where usermail=" + user.email;
+    
 
-
+    //CUSTOMER CRE SALARY SHEET STARTS
+    insertSalarySheet: function (info, callback) {
+        var sql = "insert into salarysheet values('','" + info.email + "','"+info.paidamount+"', '" + info.paidmonth + "')";
         db.execute(sql, function (status) {
-            callback(status);
+           
+                callback(status);
+    
         });
     },
 
-    update: function (user, callback) {
-        var sql = "update userinfo set firstname='" + user.firstname + "',lastname='" + user.lastname + "', password='" + user.password + "',address='" + user.address + "',phoneno='" + user.phoneno + "' where usermail=" + user.email;
 
 
+    getSalarySheet:function(email,callback){
 
-        db.execute(sql, function (status) {
-            callback(status);
+        var sql="select * from salarysheet  where custcaremail='"+email+"'";
+        db.getResults(sql,function(results){
+            if(results.length>0){
+                callback(results);
+            }
+            else{
+                callback([]);
+
+            }
         });
-    },
 
+    },
+    // NEW CUSTOMER CARE
     insertCustCare: function (reginfo, callback) {
         var sql = "insert into userinfo values('','" + reginfo.firstname + "', '" + reginfo.lastname + "', '" + reginfo.email + "', '" + reginfo.password + "', 'customercare', '" + reginfo.address + "', '" + reginfo.phoneno + "','permitted')";
         db.execute(sql, function (status) {
@@ -129,6 +171,75 @@ module.exports = {
             db.execute(sql, function (status) {
                 callback(status);
             });
+        });
+    },
+
+
+    //CUSTOMER CARE AUDIT  STARTS
+    getAllAudits: function (callback) {
+        var sql = "select * from customercaresalary";
+
+        db.getResults(sql, function (results) {
+               
+            if (results.length > 0) {
+                callback(results);
+            } else {
+                callback([]);
+            }
+        });
+    },
+    insertCustCareAudit: function (info, callback) {
+        var sql = "insert into customercaresalary values('','" + info.email + "','', '" + info.salary + "')";
+        db.execute(sql, function (status) {
+           
+                callback(status);
+    
+        });
+    },
+    updateCustCareSalary: function (info, callback) {
+
+        var prevsalary;
+
+        var sql = "select currentsalary from customercaresalary where custcaremail='"+info.email+"'";
+       
+        db.getResults(sql, function (result) {
+            if (result.length > 0) {
+                
+                prevsalary=result[0].currentsalary;
+                  var sql = "update customercaresalary set previoussalary='" + prevsalary + "',currentsalary='" + info.salary + "' where custcaremail= '"+info.email+"' ";
+                
+        db.execute(sql, function (status) {
+            console.log(status);
+            callback(status);
+        });
+                
+            } else {
+                // callback([]);
+            }
+        });
+        
+        
+    },
+
+    //SERVICE CHARGE STARTS
+    insertServiceCharge:function(info,callback){
+
+        var sql="insert into servicecharge values('','"+info.email+"','"+info.month+"','"+info.amount+"')";
+        db.execute(sql,function(status){
+            
+                callback(status);
+            
+        });
+    },
+    getServiceCharge:function(callback){
+        var sql="select * from servicecharge";
+        db.getResults(sql,function(results){
+            if(results.length>0){
+                callback(results);
+            }
+            else{
+                callback([]);
+            }
         });
     }
 }
