@@ -4,7 +4,68 @@ module.exports = {
 
     
 
-    
+    getAllUsertype:function(callback){
+        var sql="SELECT COUNT( * ) as 'travellers' FROM user WHERE `usertype`='Traveller'";
+        db.getResults(sql,function(results){
+            var travellers=results[0].travellers;
+            var sql="SELECT COUNT( * ) as 'guiders' FROM user WHERE `usertype`='Travel guider'";
+            db.getResults(sql,function(results){
+                var guiders=results[0].guiders;
+                var sql="SELECT COUNT( * ) as 'hotelemps' FROM user WHERE `usertype`='Hotel Emp'";
+                db.getResults(sql,function(results){
+                    var hotelemps=results[0].hotelemps;
+                    var sql="SELECT COUNT( * ) as 'customercare' FROM user WHERE `usertype`='customercare'";
+                    db.getResults(sql,function(results){
+                    var customercare=results[0].customercare;
+                    var sql="SELECT COUNT(*) as 'count', `division` FROM travelplace GROUP BY `division`;";
+                    db.getResults(sql,function(results){
+                        var dhaka,rajshahi,barishal,khulna,sylhet,chittagong;
+
+                        for(var i=0;i<results.length;i++){
+                            if(results[i].division=="sylhet"){
+                                 sylhet=results[i].count;
+                            }
+                            else if(results[i].division=="chittagong"){
+                                 chittagong=results[i].count;
+                            }
+                            else if(results[i].division=="dhaka"){
+                                 dhaka=results[i].count;
+                            }
+                            else if(results[i].division=="rajshahi"){
+                                 rajshahi=results[i].count;
+                            }
+                            else if(results[i].division=="khulna"){
+                                 khulna=results[i].count;
+                            }
+                            else {
+                                 barishal=results[i].count;
+                            }
+
+                        }
+                        var users = {
+                            Traveller:travellers,
+                            Guider:guiders,
+                            HotelEmp:hotelemps,
+                            CustomerCare:customercare,
+                            Sylhet:sylhet,
+                            Chittagong:chittagong,
+                            Dhaka:dhaka,
+                            Rajshahi:rajshahi,
+                            Khulna:khulna,
+                            Barishal:barishal
+                        }
+                        callback(users);
+
+                    });
+                       
+                        
+                });
+                
+                });
+
+            });
+        });
+    },
 
 
     // TRAVEL PLACE STARTS

@@ -16,7 +16,11 @@ var router = exprss.Router();
 
 
 router.get('/', function (request, response) {
-    response.render('admin/index');
+    adminModel.getAllUsertype(function(result){
+        
+      
+        response.render('admin/index',{users:result});
+    });
 });
 
 //ADMIN ADD CUST STARTS
@@ -264,14 +268,29 @@ router.post('/adminServiceCharge',function(request,response){
         month:request.body.month,
         amount:request.body.amount
     };
-    adminModel.insertServiceCharge(info,function(status){
-        if(status){
-            response.redirect('/admin');
-        }   
-        else{
-            response.send('prob');
-        }
-    });
+    if(request.body.submit=="submit"){
+
+        adminModel.insertServiceCharge(info,function(status){
+            if(status){
+                response.redirect('/admin');
+            }   
+            else{
+                response.send('prob');
+            }
+        });
+    }
+    else{
+        var sql="delete from servicecharge where usermail='"+info.email+"' and paidmonth='"+info.month+"'";
+       
+        db.execute(sql,function(status){
+            if(status){
+                response.redirect('/admin/adminServiceCharge');
+            }
+            else{
+                response.send("prob");
+            }
+        });
+    }
 }); 
 
 

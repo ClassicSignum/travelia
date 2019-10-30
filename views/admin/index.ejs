@@ -148,7 +148,16 @@
                                 <div class="col-md-9 text-center travel-font">
                                     <a href="/admin/adminCustAudit">Cust. Care Audit</a>
                                 </div>
+                          </div>
+                          <div class="row btns">
+
+                            <div class="col-md-3">
+                                    <i class="fas fa-file-invoice-dollar"></i>
                             </div>
+                            <div class="col-md-9 text-center travel-font">
+                                <a href="/admin/adminServiceCharge">Service Charge</a>
+                            </div>
+                      </div>
 
 
 
@@ -201,7 +210,7 @@
                 labels: ['Customers', 'Hotel Emp', 'Travel Guider', 'Care'],
                 datasets: [{
                     label: 'User Catagory',
-                    data: [7, 3, 3, 10],
+                    data: [ "<%= users.Traveller %>" , "<%= users.HotelEmp %>", "<%= users.Guider %>","<%= users.CustomerCare %>"],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -244,7 +253,7 @@
                 labels: ['Dhaka', 'Rajshahi', 'Khulna', 'Chittagong', 'Barishal', 'Sylhet'],
                 datasets: [{
                     label: 'Places chart',
-                    data: [2, 9, 3, 5, 4, 6],
+                    data: ["<%= users.Dhaka %>", "<%= users.Rajshahi %>", "<%= users.Khulna %>", "<%= users.Chittagong %>", "<%= users.Barishal %>", "<%= users.Sylhet %>"],
                     backgroundColor: [
                         'rgba(180, 24, 180, 0.2)',
                         'rgba(0, 0, 255, 0.2)',
